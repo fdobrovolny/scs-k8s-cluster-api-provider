@@ -302,3 +302,9 @@ variable "harbor_config" {
   EOF
   default     = {}
 }
+
+variable "apiserver_memory_limit" {
+  description = "memory limit for the apiserver container"
+  type        = string
+  default     = ""
+}

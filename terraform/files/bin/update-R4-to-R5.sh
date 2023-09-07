@@ -73,7 +73,7 @@ fi
 # Update clusterctl.yaml
 # TODO: Update below sed commands when R5 release will be stabilized
 #   see: git diff 078385c <R5 commit hash> terraform/files/template/clusterctl.yaml.tmpl
-if grep -q "SERVICE_CIDR\|POD_CIDR\|CLUSTER_API_OPENSTACK_INSTANCE_CREATE_TIMEOUT" clusterctl.yaml; then
+if grep -q "SERVICE_CIDR\|POD_CIDR\|CLUSTER_API_OPENSTACK_INSTANCE_CREATE_TIMEOUT\|K8S_APISERVER_MEMORY_LIMIT" clusterctl.yaml; then
   echo "variables in clusterctl.yaml already updated"
 else
   echo "patching variables in clusterctl.yaml"
@@ -82,6 +82,8 @@ else
   sed -i '/^NODE_CIDR/a SERVICE_CIDR: 10.96.0.0\/12\nPOD_CIDR: 192.168.0.0\/16' clusterctl.yaml || restore 7
   # PR#413 Make openstack instance create timeout configurable
   sed -i '/^OPENSTACK_CLOUD_CACERT_B64/a # set OpenStack Instance create timeout (in minutes)\nCLUSTER_API_OPENSTACK_INSTANCE_CREATE_TIMEOUT: 5' clusterctl.yaml || restore 8
+  echo "# K8S API server memory limit in bytes (empty = no limit)" >> clusterctl.yaml || restore 9
+  echo "APISERVER_MEMORY_LIMIT: \"\"" >> clusterctl.yaml || restore 10
 fi
 # Nginx-ingress controller has been updated to version 1.8.0 in PR#440 and later to 1.8.1. This is a breaking change that includes updates
 # of immutable fields. Therefore, if environment contains nginx ingress deployed via k8s-cluster-api-provider

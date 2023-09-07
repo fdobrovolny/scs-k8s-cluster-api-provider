@@ -73,6 +73,7 @@ Parameters controlling the cluster creation:
 | `restrict_kubeapi`               | `RESTRICT_KUBEAPI`                              | SCS        | `[ ]`                                                    | Allows restricting access to kubernetes API by list of CIDRs. Empty list (default) means public, `[ "none" ]` means internal access only.                                                                  |
 | `capo_instance_create_timeout`   | `CLUSTER_API_OPENSTACK_INSTANCE_CREATE_TIMEOUT` | capo       | `5`                                                      | Time to wait for an OpenStack machine to be created (in minutes)                                                                                                                                           |
 | `containerd_registry_files`      |                                                 | SCS        | `{"hosts":["./files/containerd/docker.io"], "certs":[]}` | Containerd registry hosts config files, see related [docs](./usage/containter-registry-configuration.md) for details.                                                                                      |
+| `apiserver_memory_limit`         | `APISERVER_MEMORY_LIMIT`                        | SCS        | `""`                                                     | Memory limit for the kube-apiserver container.                                                                                                                                                             |
 
 Optional services deployed to cluster:
 
